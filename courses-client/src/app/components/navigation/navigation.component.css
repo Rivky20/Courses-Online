@@ -1,0 +1,132 @@
+/* ייבוא הפונט */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap');
+
+/* סגנון הניווט */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 4em;
+  background-color: #5D4037; /* צבע עץ */
+  display: flex;
+  align-items: center;
+  padding: 0 2em;
+  text-shadow: 0 0 5px rgba(139, 69, 19, 0.1),
+  0 0 10px rgba(139, 69, 19, 0.1),
+  2px 2px 4px rgba(139, 69, 19, 0.3);
+  font-family: 'Raleway', sans-serif;
+}
+
+/* מרווח אוטומטי */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* עיצוב כפתורים ולינקים */
+a, button {
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1.1em;
+  padding: 0.5em 1em;
+  margin: 0 0.8em;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(139, 69, 19, 0.1),
+  0 0 10px rgba(139, 69, 19, 0.1),
+  2px 2px 4px rgba(139, 69, 19, 0.3);
+}
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 4em;
+  background-color: #5D4037;
+  display: flex;
+  align-items: center;
+  padding: 0 2em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* צל שמדגיש את ההפרדה */
+  text-shadow: 0 0 5px rgba(139, 69, 19, 0.1),
+               0 0 10px rgba(139, 69, 19, 0.1),
+               2px 2px 4px rgba(139, 69, 19, 0.3);
+  font-family: 'Raleway', sans-serif;
+}
+
+/* הוספת קלאס חדש למניעת חפיפה */
+.nav-spacer {
+  height: 4em;
+  width: 100%;
+}
+
+/* אפקט hover חדש - מסגרת שמופיעה בהדרגה */
+a:hover::before, 
+button:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #f5e6d3; /* צבע בז' */
+  border-radius: 25px;
+  opacity: 0;
+  animation: fadeInBorder 0.5s ease forwards;
+}
+
+/* אנימציית הופעה הדרגתית של המסגרת */
+@keyframes fadeInBorder {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* סגנון לינק פעיל */
+.active {
+  font-weight: 500;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 25px;
+}
+
+/* הוספת em ו-mk */
+nav::before {
+  content: 'em';
+  position: absolute;
+  left: 10px;
+  bottom: 5px;
+  font-size: 0.8em;
+  color: rgba(255,255,255,0.5);
+}
+
+nav::after {
+  content: 'mk';
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 0.8em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+  nav {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 1em;
+  }
+
+  a, button {
+    margin: 0.4em;
+    font-size: 1em;
+  }
+}

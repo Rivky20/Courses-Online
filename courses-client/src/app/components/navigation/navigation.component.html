@@ -1,0 +1,23 @@
+<nav>
+  <a routerLink="/home" routerLinkActive="active">דף הבית</a>
+  <a *ngIf="authService.isAuthenticated()" 
+     routerLink="/courses" 
+     routerLinkActive="active">קורסים</a>
+  <a *ngIf="authService.isAuthenticated()" 
+     routerLink="/my-courses" 
+     routerLinkActive="active">הקורסים שלי</a>
+  <a *ngIf="authService.isAuthenticated() && (authService.getRole() === 'admin' || authService.getRole() === 'teacher')" 
+     routerLink="/manage-courses" 
+     routerLinkActive="active">ניהול קורסים</a>
+  
+  <div class="spacer"></div>
+  
+  <button *ngIf="authService.isAuthenticated()" 
+          (click)="authService.logout()">התנתק</button>
+  <a *ngIf="!authService.isAuthenticated()" 
+     routerLink="/login" 
+     routerLinkActive="active">התחבר</a>
+  <a *ngIf="!authService.isAuthenticated()" 
+     routerLink="/register" 
+     routerLinkActive="active">הרשם</a>
+</nav>
