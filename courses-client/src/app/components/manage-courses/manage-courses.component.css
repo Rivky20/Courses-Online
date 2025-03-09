@@ -1,154 +1,167 @@
 .manage-courses-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 15px;
+  min-height: calc(100vh - 84px);
+  direction: rtl;
 }
 
-.manage-courses-container h1 {
-  margin-bottom: 20px;
-}
-
-.forms-container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.forms-container mat-card {
-  width: 48%;
-  max-width: 600px;
-}
-
-mat-card {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-mat-form-field {
-  width: 100%;
-}
-
-mat-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f0f0f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.error-message {
-  color: red;
-  margin-top: 20px;
+/* Header Styling */
+h1 {
+  color: #34495e;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
   text-align: center;
+  position: relative;
+  padding-bottom: 12px;
 }
 
-.action-button {
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  margin-right: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to left, #5c6bc0, #3f51b5);
 }
 
-.action-button:hover {
-  background-color: #e0e0e0;
-}
-
-.action-button mat-icon {
-  font-size: 16px;
-  margin-right: 4px;
-}
-
-.course-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.course-actions {
-  display: flex;
-  gap: 8px;
-}
-
-h3[matListItemTitle] {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 80%;
-  margin: 0;
-}
-
-mat-card-content {
-  padding: 16px;
-}
-
-mat-expansion-panel {
-  margin-bottom: 10px;
-}
-
-mat-expansion-panel-header {
-  background-color: #f0f0f0;
-}
-
-mat-expansion-panel-header:hover {
-  background-color: #e0e0e0;
-}
-
-mat-expansion-panel-header mat-panel-title {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-mat-expansion-panel-header mat-panel-description {
-  font-size: 0.9em;
-  color: #555;
-}
-
-mat-list {
-  margin-bottom: 10px;
-}
-.manage-courses-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
+/* Actions Container */
 .actions-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .action-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
-mat-expansion-panel {
-  width: 100%;
-  max-width: 800px;
+.action-buttons button {
+  color: #5c6bc0;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background: rgba(92, 107, 192, 0.1);
+}
+
+/* Forms Styling */
+form {
+  margin-bottom: 20px;
 }
 
 mat-form-field {
   width: 100%;
+  margin-bottom: 15px;
 }
 
+/* Expansion Panel Styling */
+mat-accordion {
+  width: 100%;
+}
+
+mat-expansion-panel {
+  border-radius: 10px !important;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+mat-expansion-panel:hover {
+  border-right: 3px solid #5c6bc0;
+  box-shadow: 0 5px 15px rgba(92, 107, 192, 0.1) !important;
+}
+
+mat-expansion-panel-header {
+  padding: 20px !important;
+  height: auto !important;
+}
+
+mat-panel-title {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+mat-panel-description {
+  color: #5c6bc0;
+  font-size: 0.85rem;
+}
+
+/* Course Content */
+mat-card-content {
+  padding: 20px;
+}
+
+.course-actions {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+/* Add/Update buttons */
+button[color="primary"] {
+  background: #5c6bc0 !important;
+  color: white !important;
+  padding: 8px 25px !important;
+  border-radius: 25px !important;
+  font-size: 0.95rem;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+button[color="primary"]:hover {
+  background: #3f51b5 !important;
+  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.25);
+}
+
+/* Regular buttons */
+button[mat-button]:not([color="primary"]) {
+  color: #5c6bc0;
+  font-size: 0.9rem;
+}
+
+/* Error Message */
 .error-message {
-  color: red;
-  margin-top: 10px;
+  color: #e74c3c;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+/* Empty State */
+mat-accordion:empty + p {
+  text-align: center;
+  color: #666;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .actions-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .action-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  button[color="primary"] {
+    width: 100%;
+  }
+  
+  mat-expansion-panel-header {
+    padding: 15px !important;
+  }
 }

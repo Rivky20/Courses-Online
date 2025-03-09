@@ -1,5 +1,47 @@
 <div class="home-container">
-    <h1>ברוכים הבאים למערכת ניהול קורסים אונליין</h1>
-    <p>כאן תוכלו למצוא מגוון קורסים מעניינים וללמוד מהטובים ביותר.</p>
-    <p>המערכת מאפשרת למורים לנהל קורסים ולתלמידים להשתתף בהם בקלות.</p>
+  <div class="hero-section">
+    <h1>מרכז הידע המתקדם להתפתחות מקצועית</h1>
+    <p class="subtitle">🪶פיתוח אישי ומקצועי בסטנדרטים הגבוהים ביותר</p>
   </div>
+
+  <div class="features-grid">
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon>trending_up</mat-icon>
+        <mat-card-title>פיתוח מיומנויות המחר</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        מסלולי לימוד מותאמים אישית המתעדכנים בהתאם לדרישות השוק המשתנות
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon>psychology</mat-icon>
+        <mat-card-title>למידה אינטראקטיבית</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        שיטות הוראה חדשניות המשלבות תיאוריה ופרקטיקה לחוויית למידה מעמיקה
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon>groups</mat-icon>
+        <mat-card-title>קהילה מקצועית</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        הזדמנות להתחבר למומחים מובילים ועמיתים מקצועיים מכל רחבי הארץ
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="cta-section">
+    <h2>התחילו את המסע שלכם להצלחה</h2>
+    <p>הצטרפו אלינו עוד היום וגלו את המסלול המושלם עבורכם</p>
+<button mat-raised-button color="primary" (click)="navigateToCourses()">
+  לקורסים שלנו
+  <mat-icon>arrow_forward</mat-icon>
+</button>
+  </div>
+</div>

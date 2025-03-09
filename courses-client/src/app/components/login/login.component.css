@@ -1,0 +1,125 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F5F3EF;
+    padding: 20px;
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(92, 107, 192, 0.06);
+    padding: 30px;
+  }
+  
+  mat-card-title {
+    color: #34495e;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  mat-card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: #5c6bc0;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  /* Input fields styling */
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #5c6bc0;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #5c6bc0;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
+    color: #666;
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    background: #5c6bc0 !important;
+    color: white !important;
+    padding: 8px 25px !important;
+    border-radius: 25px !important;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  button[type="submit"]:not([disabled]):hover {
+    background: #3f51b5 !important;
+    box-shadow: 0 4px 12px rgba(92, 107, 192, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  /* Error message */
+  .error-message {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  /* Create account link */
+  a {
+    margin-top: 20px;
+    color: #5c6bc0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+  }
+  
+  a:hover {
+    color: #3f51b5;
+    text-decoration: underline;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .login-card {
+      padding: 20px;
+    }
+  
+    mat-card-title {
+      font-size: 1.5rem;
+    }
+  
+    button[type="submit"] {
+      width: 100%;
+    }
+  }

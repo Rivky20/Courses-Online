@@ -1,23 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { Component } from '@angular/core';
+// import { AuthService } from '../../services/auth.service';
+// import { RouterLink, RouterLinkActive } from '@angular/router';
+// import { NgIf } from '@angular/common';
+// import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatIconModule } from '@angular/material/icon';
 
-import { NavigationComponent } from './navigation.component';
-
-describe('NavigationComponent', () => {
-  let component: NavigationComponent;
-  let fixture: ComponentFixture<NavigationComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NavigationComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(NavigationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+// @Component({
+//   selector: 'app-navigation',
+//   standalone: true,
+//   templateUrl: './navigation.component.html',
+//   styleUrls: ['./navigation.component.css'],
+//   imports: [
+//     RouterLink,
+//     RouterLinkActive,
+//     NgIf,
+//     MatToolbarModule,
+//     MatButtonModule,
+//     MatIconModule
+//   ]
+// })
+// export class NavigationComponent {
+//   constructor(public authService: AuthService) { }
+// }

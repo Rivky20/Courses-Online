@@ -1,3 +1,141 @@
+/* הקוד שלך עם שינויים לפוטר */
+.content-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 64px;
+}
+
+.nav-toolbar {
+  background-color: #d499af;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.main-content {
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+}
+
+.nav-container, .auth-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.nav-button {
+  background-color: rgb(252, 247, 247);  /* שינוי לרקע לבן */
+  color: #333 !important;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.nav-button:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.active {
+  background-color: white;
+  border-bottom: 3px solid #435f7b;  /* קו תחתון בצבע ורוד */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+mat-icon {
+  color: #666;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+.footer {
+  margin-top: auto;
+  background-color: white;
+  padding: 20px 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-border {
+  height: 2px;
+  width: 100px;
+  background: linear-gradient(to right, transparent, #ffc3e0, transparent);
+}
+
+.footer-text {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+  background-color: rgba(255, 195, 224, 0.1);
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.email-link {
+  color: inherit; /* משתמש בצבע הטקסט הרגיל */
+  text-decoration: none; /* מסיר קו תחתון */
+  font-weight: bold;
+}
+
+/* עיצוב לפוטר */
+@media (max-width: 768px) {
+  .nav-toolbar {
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
   }
+
+  .nav-container, .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-button {
+    width: 100%;
+    margin: 4px 0;
+    text-align: center;
+  }
+
+  .spacer {
+    height: 16px;
+  }
+
+  .footer-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-border {
+    width: 50px;
+  }
+}

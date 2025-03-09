@@ -1,36 +1,78 @@
 <div class="courses-container">
-  <h1>רשימת קורסים</h1>
-  <mat-accordion>
-    @for (course of courses; track course.id) {
-    <mat-expansion-panel (opened)="showCourseDetails(course.id)" (closed)="course.isDetailsOpen = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ course.title }}
-        </mat-panel-title>
-        <mat-panel-description>
-          לחץ כאן כדי {{ course.isDetailsOpen ? 'לסגור פרטים' : 'לראות פרטים' }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <mat-card-content>
-        @if (selectedCourse && selectedCourse.id === course.id) {
-        <p>{{ selectedCourse.description }}</p>
-        <h3>שיעורים</h3>
-        <mat-list>
-          @for (lesson of lessons; track lesson.id) {
-          <mat-list-item>
-            <h4>{{ lesson.title }}</h4>
-            <p>{{ lesson.content }}</p>
-          </mat-list-item>
-          } @empty {
-          <p>אין שיעורים בקורס זה.</p>
-          }
-        </mat-list>
+  <div class="courses-wrapper">
+    <!-- Courses List -->
+    <div class="courses-list">
+      <h1>הקורסים שלנו</h1>
+      <div class="courses-grid">
+        @for (course of courses; track course.id) {
+          <div class="course-card" 
+               [class.active]="selectedCourse?.id === course.id"
+               (click)="showCourseDetails(course.id)">
+            <h3>{{ course.title }}</h3>
+            <div class="course-preview">
+              <mat-icon>arrow_forward</mat-icon>
+              <span>למד עוד על הקורס</span>
+            </div>
+          </div>
+        } @empty {
+          <div class="no-courses">
+            <mat-icon>search_off</mat-icon>
+            <p>אין קורסים זמינים כעת. חזור מאוחר יותר.</p>
+          </div>
         }
-        <button mat-button (click)="joinCourse(course.id)">הצטרף</button>
-      </mat-card-content>
-    </mat-expansion-panel>
-    } @empty {
-    <p>אין קורסים זמינים כרגע.</p>
-    }
-  </mat-accordion>
+      </div>
+    </div>
+
+    <!-- Course Details -->
+    <div class="course-details" [class.active]="selectedCourse">
+      @if (selectedCourse) {
+        <div class="details-content">
+          <div class="details-header">
+            <h2>{{ selectedCourse.title }}</h2>
+            <div class="header-divider"></div>
+          </div>
+
+          <div class="course-description">
+            {{ selectedCourse.description }}
+          </div>
+          
+          <div class="lessons-section">
+            <div class="section-header">
+              <h3>שיעורים בקורס</h3>
+              <div class="header-divider"></div>
+            </div>
+
+            <div class="lessons-list">
+              @for (lesson of lessons; track lesson.id) {
+                <div class="lesson-item">
+                  <div class="lesson-icon">
+                    <mat-icon>play_circle_filled</mat-icon>
+                  </div>
+                  <div class="lesson-content">
+                    <h4>{{ lesson.title }}</h4>
+                    <p>{{ lesson.content }}</p>
+                  </div>
+                </div>
+              } @empty {
+                <div class="no-lessons">
+                  <mat-icon>highlight_off</mat-icon>
+                  <p>כרגע אין שיעורים זמינים בקורס זה.</p>
+                </div>
+              }
+            </div>
+          </div>
+          
+          <button mat-raised-button class="join-button" (click)="joinCourse(selectedCourse.id)">
+            <span>הצטרף לקורס</span>
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </div>
+      } @else {
+        <div class="no-selection">
+          <mat-icon>touch_app</mat-icon>
+          <p>בחר קורס מהרשימה כדי להציג את פרטי הקורס</p>
+        </div>
+      }
+    </div>
+  </div>
 </div>
