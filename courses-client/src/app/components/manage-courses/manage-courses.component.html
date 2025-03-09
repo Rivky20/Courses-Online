@@ -1,30 +1,51 @@
 <div class="manage-courses-container">
   <h1>ניהול קורסים</h1>
 
-  <div class="forms-container">
-    <mat-card>
-      <mat-card-title>הוספת קורס</mat-card-title>
-      <mat-card-content>
-        <form [formGroup]="courseForm" (ngSubmit)="addCourse()">
-          <mat-form-field>
-            <input matInput formControlName="title" placeholder="כותרת קורס">
-          </mat-form-field>
-          <mat-form-field>
-            <textarea matInput formControlName="description" placeholder="תיאור קורס"></textarea>
-          </mat-form-field>
-          <button mat-raised-button color="primary" type="submit">הוסף</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
+  <div class="actions-container">
+    <div class="action-buttons">
+      <button mat-button (click)="openAll()">פתח הכל</button>
+      <button mat-button (click)="closeAll()">סגור הכל</button>
+    </div>
 
-    @if (selectedCourse) {
-    <mat-card>
-      <mat-card-title>{{ selectedCourse.title }}</mat-card-title>
+    <button mat-raised-button color="primary" (click)="toggleAddCourseForm()">הוסף קורס</button>
+  </div>
+
+  @if (isAddCourseFormOpen) {
+  <form [formGroup]="courseForm" (ngSubmit)="addCourse()">
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="כותרת קורס">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput formControlName="description" placeholder="תיאור קורס"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">הוסף</button>
+    <button mat-button (click)="toggleAddCourseForm()">בטל</button>
+  </form>
+  }
+
+  <mat-accordion class="example-headers-align" multi>
+    @for (course of courses; track course.id) {
+    <mat-expansion-panel (opened)="showCourseDetails(course.id)" (closed)="course.isDetailsOpen = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ course.title }}
+        </mat-panel-title>
+        <mat-panel-description>
+          לחץ כאן כדי {{ course.isDetailsOpen ? 'לסגור פרטים' : 'לראות פרטים' }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
       <mat-card-content>
+        @if (selectedCourse && selectedCourse.id === course.id) {
         <p>{{ selectedCourse.description }}</p>
 
-        <h2>עדכון קורס</h2>
-        <form [formGroup]="courseForm" (ngSubmit)="updateCourse(selectedCourse.id)">
+        @if (!course.isEditFormOpen) {
+        <div class="course-actions">
+          <button mat-button (click)="toggleEditForm(course)">ערוך קורס</button>
+          <button mat-button (click)="deleteCourse(course.id)">מחק קורס</button>
+        </div>
+        } @else {
+        <form [formGroup]="courseForm" (ngSubmit)="updateCourse(course.id)">
           <mat-form-field>
             <input matInput formControlName="title" placeholder="כותרת קורס">
           </mat-form-field>
@@ -32,10 +53,52 @@
             <textarea matInput formControlName="description" placeholder="תיאור קורס"></textarea>
           </mat-form-field>
           <button mat-raised-button color="primary" type="submit">עדכן</button>
+          <button mat-button (click)="toggleEditForm(course)">בטל</button>
         </form>
+        }
+
+        <button mat-button (click)="toggleLessonsAccordion(course)">
+          {{ course.isLessonsAccordionOpen ? 'סגור שיעורים' : 'פתח שיעורים' }}
+        </button>
+
+        @if (course.isLessonsAccordionOpen) {
+        <mat-accordion multi>
+          @for (lesson of lessons; track lesson.id) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ lesson.title }}</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-card-content>
+              <p>{{ lesson.content }}</p>
+
+              @if (!lesson.isEditFormOpen) {
+              <div class="lesson-actions">
+                <button mat-button (click)="toggleLessonEditForm(lesson)">ערוך שיעור</button>
+                <button mat-button (click)="deleteLesson(course.id, lesson.id)">מחק שיעור</button>
+              </div>
+              } @else {
+              <form [formGroup]="lessonForm" (ngSubmit)="updateLesson(course.id, lesson.id)">
+                <mat-form-field>
+                  <input matInput formControlName="title" placeholder="כותרת שיעור">
+                </mat-form-field>
+                <mat-form-field>
+                  <textarea matInput formControlName="content" placeholder="תוכן שיעור"></textarea>
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit">עדכן</button>
+                <button mat-button (click)="toggleLessonEditForm(lesson)">בטל</button>
+              </form>
+              }
+            </mat-card-content>
+          </mat-expansion-panel>
+          } @empty {
+          <p>אין שיעורים בקורס זה.</p>
+          }
+        </mat-accordion>
+        }
 
         <h2>הוספת שיעור</h2>
-        <form [formGroup]="lessonForm" (ngSubmit)="addLesson(selectedCourse.id)">
+        <form [formGroup]="lessonForm" (ngSubmit)="addLesson(course.id)">
           <mat-form-field>
             <input matInput formControlName="title" placeholder="כותרת שיעור">
           </mat-form-field>
@@ -44,52 +107,13 @@
           </mat-form-field>
           <button mat-raised-button color="primary" type="submit">הוסף</button>
         </form>
+        }
       </mat-card-content>
-    </mat-card>
+    </mat-expansion-panel>
+    } @empty {
+    <p>אין קורסים זמינים כרגע.</p>
     }
-  </div>
-
-  <mat-card>
-    <mat-card-title>רשימת קורסים</mat-card-title>
-    <mat-card-content>
-      <mat-list>
-        @for (course of courses; track course.id) {
-        <mat-list-item>
-          <h3 matListItemTitle>{{ course.title }}</h3>
-          <div class="course-actions">
-            <button mat-icon-button (click)="showCourseDetails(course.id)"><mat-icon>info</mat-icon></button>
-            <button mat-icon-button (click)="deleteCourse(course.id)"><mat-icon>delete</mat-icon></button>
-            <button mat-icon-button (click)="editCourse(course)"><mat-icon>edit</mat-icon></button>
-          </div>
-        </mat-list-item>
-        } @empty {
-        <p>אין קורסים זמינים כרגע.</p>
-        }
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
-
-  @if (selectedCourse) {
-  <mat-card>
-    <mat-card-title>שיעורים</mat-card-title>
-    <mat-card-content>
-      <mat-list>
-        @for (lesson of lessons; track lesson.id) {
-        <mat-list-item>
-          <h4 matListItemTitle>{{ lesson.title }}</h4>
-          <p matListItemLine>{{ lesson.content }}</p>
-          <div class="lesson-actions">
-            <button mat-icon-button (click)="updateLesson(selectedCourse.id, lesson.id)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button (click)="deleteLesson(selectedCourse.id, lesson.id)"><mat-icon>delete</mat-icon></button>
-          </div>
-        </mat-list-item>
-        } @empty {
-        <p>אין שיעורים בקורס זה.</p>
-        }
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
-  }
+  </mat-accordion>
 
   @if (errorMessage) {
   <div class="error-message">{{ errorMessage }}</div>

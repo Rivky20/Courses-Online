@@ -3,26 +3,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CoursesService {
-
-joinCourse(courseId: number, userId: any): Observable<any> {
-  const token = localStorage.getItem('token');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`
-  });
-  return this.http.post(`${this.baseUrl}/${courseId}/join`, { userId }, { headers });
-}
-
   private baseUrl = 'http://localhost:3000/api/courses';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCourses(): Observable<any[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.get<any[]>(this.baseUrl, { headers });
   }
@@ -30,7 +21,7 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   getCourseDetails(courseId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.get(`${this.baseUrl}/${courseId}`, { headers });
   }
@@ -38,7 +29,7 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   addCourse(course: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.post(this.baseUrl, course, { headers });
   }
@@ -46,7 +37,8 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   updateCourse(courseId: number, course: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
     return this.http.put(`${this.baseUrl}/${courseId}`, course, { headers });
   }
@@ -54,7 +46,7 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   deleteCourse(courseId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.delete(`${this.baseUrl}/${courseId}`, { headers });
   }
@@ -62,7 +54,7 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   getLessons(courseId: number): Observable<any[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.get<any[]>(`${this.baseUrl}/${courseId}/lessons`, { headers });
   }
@@ -70,7 +62,7 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   addLesson(courseId: number, lesson: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.post(`${this.baseUrl}/${courseId}/lessons`, lesson, { headers });
   }
@@ -78,20 +70,42 @@ joinCourse(courseId: number, userId: any): Observable<any> {
   updateLesson(courseId: number, lessonId: number, lesson: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
+    // שימו לב לשינוי בנתיב ה-URL
     return this.http.put(`${this.baseUrl}/${courseId}/lessons/${lessonId}`, lesson, { headers });
   }
 
   deleteLesson(courseId: number, lessonId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
     return this.http.delete(`${this.baseUrl}/${courseId}/lessons/${lessonId}`, { headers });
   }
 
-  leaveCourse(url: string, headers: any): Observable<any> {
-    return this.http.delete(url, { headers });
+  getStudentCourses(studentId: number): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<any[]>(`${this.baseUrl}/student/${studentId}`, { headers });
+  }
+
+  leaveCourse(courseId: number, userId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<any>(`${this.baseUrl}/${courseId}/unenroll`, { headers, body: { userId } });
+  }
+
+  joinCourse(courseId: number, userId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post(`${this.baseUrl}/${courseId}/enroll`, { userId }, { headers });
   }
 }

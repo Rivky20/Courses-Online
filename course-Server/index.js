@@ -88,9 +88,7 @@ app.use('/api/auth', authRoutes(db));
 app.use('/api/users', userRoutes(db));
 app.use('/api/courses', courseRoutes(db));
 app.use('/api/courses/:courseId/lessons', lessonRoutes(db));
-app.get("/", (req, res) => {
-  res.send("Server is running!");
-});
+
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });

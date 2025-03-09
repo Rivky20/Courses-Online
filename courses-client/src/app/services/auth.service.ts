@@ -1,90 +1,63 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
-export interface User {
-  id: string;
-  email: string;
-  role: string;
-  token: string;
-}
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
-export interface RegisterData {
-  email: string;
-  password: string;
-  name: string;
-}
+import { Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api/auth';
-  private userSubject = new BehaviorSubject<User | null>(this.getUserFromStorage());
-  
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {}
+  private apiUrl = 'http://localhost:3000/api/auth';
 
-  private getUserFromStorage(): User | null {
-    const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
-  }
+  constructor(private http: HttpClient) { }
 
-  login(loginData: LoginData): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/login`, loginData)
-      .pipe(
-        tap(user => {
-          localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('token', user.token);
-          this.userSubject.next(user);
-        })
-      );
-  }
-
-  register(registerData: RegisterData): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/register`, registerData)
-      .pipe(
-        tap(user => {
-          localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('token', user.token);
-          this.userSubject.next(user);
-        })
-      );
-  }
-
-  logout(): void {
-    localStorage.removeItem('user');
+  logout() {
     localStorage.removeItem('token');
-    this.userSubject.next(null);
-    this.router.navigate(['/login']);
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId'); // הוספת מחיקת userId
   }
 
   isAuthenticated(): boolean {
-    return !!this.userSubject.value;
+    return !!localStorage.getItem('token');
+  }
+
+  login(credentials: any): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(user => this.saveUser(user)) // שימוש ב-tap לשמירת המשתמש
+    );
+  }
+
+
+  saveUser(user: User): void {
+    localStorage.setItem('token', user.token);
+    localStorage.setItem('userId', String(user.userId));
+    localStorage.setItem('role', user.role);
   }
 
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  getUserId(): string | null {
-    return this.userSubject.value?.id || null;
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      const parsedUserId = parseInt(userId, 10);
+      if (!isNaN(parsedUserId)) {
+        return parsedUserId;
+      } else {
+        console.error('Invalid userId in LocalStorage:', userId);
+        return null;
+      }
+    }
+    return null;
   }
 
   getRole(): string | null {
-    return this.userSubject.value?.role || null;
+    return localStorage.getItem('role');
   }
 
-  getCurrentUser(): User | null {
-    return this.userSubject.value;
+  register(name: string, email: string, password: string, role: string): Observable<any> {
+    const body = { name, email, password, role };
+    return this.http.post<any>(`${this.apiUrl}/register`, body);
   }
 }

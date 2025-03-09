@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CoursesService } from '../../services/coursesdata.service';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-my-courses',
@@ -22,27 +22,33 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
   ],
   templateUrl: './my-courses.component.html',
-  styleUrl: './my-courses.component.css'
+  styleUrl: './my-courses.component.css',
 })
 export class MyCoursesComponent implements OnInit {
   courses: any[] = [];
   selectedCourse: any = null;
   lessons: any[] = [];
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.coursesService.getCourses().subscribe(
-      (courses) => {
-        this.courses = courses;
-      },
-      (error) => {
-        console.error('Error fetching my courses:', error);
-      }
-    );
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.coursesService.getStudentCourses(userId).subscribe(
+        (courses) => {
+          this.courses = courses.map((course) => ({ ...course, isDetailsOpen: false }));
+        },
+        (error) => {
+          console.error('Error fetching my courses:', error);
+        }
+      );
+    } else {
+      console.error('User not authenticated.');
+    }
   }
 
   showCourseDetails(courseId: number) {
@@ -63,5 +69,29 @@ export class MyCoursesComponent implements OnInit {
         console.error('Error fetching lessons:', error);
       }
     );
+  }
+
+  leaveCourse(courseId: number) {
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.coursesService.leaveCourse(courseId, userId).subscribe(
+        (response) => {
+          console.log('Left course successfully:', response);
+          this.ngOnInit();
+        },
+        (error) => {
+          console.error('Error leaving course:', error);
+        }
+      );
+    } else {
+      console.error('User not authenticated.');
+    }
+  }
+
+  toggleCourseDetails(course: any) {
+    course.isDetailsOpen = !course.isDetailsOpen;
+    if (course.isDetailsOpen) {
+      this.showCourseDetails(course.id);
+    }
   }
 }

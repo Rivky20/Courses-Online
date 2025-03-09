@@ -1,31 +1,4 @@
-:root {
-    --off-white: #faf9f6;
-    --primary-wood: #5D4037;
-    --accent-beige: #f5e6d3;
-  }
-  
-  body {
-    margin: 0;
-    padding-top: 4em;
-    background-color: var(--off-white);
-  }
-  
-  app-root {
-    min-height: 100vh;
-    display: block;
-    background-color: var(--off-white);
-  }
-  body {
-    margin: 0;
-    padding-top: 4em; /* חשוב! זה יוצר רווח בדיוק בגודל ה-header */
-    background-color: #f9f3e0;
+/* You can add global styles to this file, and also import other style files */
 
-    min-height: 100vh;
-  }
-  
-  /* מוודא שכל התוכן מתחיל אחרי ה-header */
-  .content-wrapper {
-    margin-top: 4em; /* אותו גובה כמו ה-header */
-    position: relative;
-    z-index: 1;
-  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
