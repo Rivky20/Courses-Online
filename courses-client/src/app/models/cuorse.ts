@@ -1,11 +1,11 @@
-
 export interface Course {
-    id: number;
-    title: string;
-    description: string;
-    teacherId: number;
-    enrolledStudents?: number;
-    isEnrolled?: boolean;
+  id: number;
+  name: string;
+  description: string;
+  instructor: string;
+  duration: string;
+  isEnrolled?: boolean;
+  isDetailsOpen?: boolean;
 }
   
 

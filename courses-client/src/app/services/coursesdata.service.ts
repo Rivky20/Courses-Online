@@ -6,9 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CoursesService {
-  joinCourse(courseId: number, userId: any) {
-    throw new Error('Method not implemented.');
-  }
+
+joinCourse(courseId: number, userId: any): Observable<any> {
+  const token = localStorage.getItem('token');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+  return this.http.post(`${this.baseUrl}/${courseId}/join`, { userId }, { headers });
+}
+
   private baseUrl = 'http://localhost:3000/api/courses';
 
   constructor(private http: HttpClient) { }

@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-color: #dfc29c; /* גוון בז' */
+    background-color: #f9efe0; /* גוון בז' */
     font-family: 'Raleway', sans-serif;
     overflow: hidden; /* מניעת גלילה */
     display: flex;

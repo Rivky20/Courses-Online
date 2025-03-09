@@ -1,13 +1,41 @@
 <div class="courses-container">
-  <h1>רשימת קורסים</h1>
-  @for (course of courses; track course.id) {
-    <div class="course-item">
-      <h2>{{ course.title }}</h2>
-      <p>{{ course.description }}</p>
-      <button (click)="joinCourse(course.id)">הצטרף</button>
-      <button (click)="leaveCourse(course.id)">עזוב</button>
+  <h2>קורסים זמינים</h2>
+  
+  <div class="courses-grid">
+    <div *ngFor="let course of courses" class="course-card">
+      <div class="course-header">
+        <h3>{{ course.name }}</h3>
+        <button (click)="toggleCourseDetails(course)" class="details-btn">
+          {{ course.isDetailsOpen ? 'הסתר פרטים' : 'הצג פרטים' }}
+        </button>
+      </div>
+
+      <div class="course-actions">
+        <button 
+          (click)="joinCourse(course.id)" 
+          [disabled]="course.isEnrolled"
+          class="join-btn"
+          [class.enrolled]="course.isEnrolled">
+          {{ course.isEnrolled ? 'רשום לקורס' : 'הצטרף לקורס' }}
+        </button>
+      </div>
+
+      <div *ngIf="course.isDetailsOpen" class="course-details">
+        <div class="course-info">
+          <p><strong>תיאור:</strong> {{ course.description }}</p>
+          <p><strong>מרצה:</strong> {{ course.instructor }}</p>
+          <p><strong>משך:</strong> {{ course.duration }}</p>
+        </div>
+
+        <div *ngIf="lessons && lessons.length > 0" class="lessons-list">
+          <h4>שיעורים בקורס:</h4>
+          <ul>
+            <li *ngFor="let lesson of lessons">
+              {{ lesson.title }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  } @empty {
-    <p>אין קורסים זמינים כרגע.</p>
-  }
+  </div>
 </div>
